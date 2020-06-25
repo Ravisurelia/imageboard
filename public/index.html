@@ -1,10 +1,27 @@
 <!doctype html>
 <html>
 <head>
-    <title></title>
+    <title>Pixelr</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+    <h1>Pixelr</h1>
+    <div id="main">
+
+        <div class="container" v-for="info in gettingAllInfo">
+            <div class="container2"> 
+                <img :src="info.url" class="imagesurl">
+                <p class="card">{{info.username}}</p>
+                <p class="card">{{info.title}}  </p>
+                <p class="card">{{info.description}} </p>
+            </div>
+           
+        </div>
+         
+     
+    </div>
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>
+    <script src="/js/script.js"></script>
 </body>
 </html>
