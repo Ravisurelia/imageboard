@@ -10,13 +10,29 @@
         <h1>Pixelr</h1>
     </nav>
     <div id="main">
-
-        <div class="container" v-for="info in gettingAllInfo">
-                <img :src="info.url" class="images">
-                <!-- <p class="card">{{info.username}}</p> -->
-                <p class="title">{{info.title}}  </p>
-               <!--  <p class="card">{{info.description}} </p> -->
+        <div class="inputs">
+            <form>
+                <input class="imgtitle" v-model="title" type="text" name="title" placeholder="title">
+                <input class="imgdescription" v-model="description" type="text" name="description" placeholder="description">
+                <input class="imgusername" v-model="username" type="text" name="username" placeholder="username">
+                <input class="imgfile" @change="handleChange" type="file" name="file" accept="image/*">
+                
+                <button class="submit"  @click="handleClick" >Upload</button>
+            </form>
         </div>
+        
+        <div class="cards">
+            <div class="container" v-for="info in gettingAllInfo">
+                <img :src="info.url" class="images">
+                <p class="title">{{info.title}}  </p>
+                <!-- <p class="card">{{info.username}}</p> -->
+            <!--  <p class="card">{{info.description}} </p> -->
+        </div>
+
+</div>
+        
+
+        
          
      
     </div>

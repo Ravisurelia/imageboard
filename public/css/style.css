@@ -7,7 +7,66 @@
 #main {
   display: flex;
   width: 100vw;
+  justify-content: space-evenly;
+  flex-direction: column;
+  margin-top: 5px;
+}
+
+.inputs {
+  flex-direction: row;
+  justify-content: center;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.imgtitle {
+  height: 25px;
+  width: 200px;
+  margin-right: 10px;
+  border: 1.5px solid black;
+  text-align: center;
+  border-radius: 5px;
+}
+.imgdescription {
+  height: 25px;
+  width: 400px;
+  border: 1.5px solid black;
+  text-align: center;
+  border-radius: 5px;
+}
+.imgusername {
+  height: 25px;
+  width: 200px;
+  margin-left: 10px;
+  border: 1.5px solid black;
+  text-align: center;
+  border-radius: 5px;
+}
+.imgfile {
+  height: 25px;
+  width: 300px;
+  margin-left: 10px;
+}
+
+.submit {
+  height: 40px;
+  width: 100px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 1) 0%,
+    rgba(255, 98, 0, 1) 49%,
+    rgba(227, 242, 117, 1) 100%
+  );
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  border: thin;
+}
+
+.cards {
+  display: flex;
   justify-content: space-around;
+  margin-top: 20px;
 }
 
 .container {
