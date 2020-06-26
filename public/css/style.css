@@ -67,6 +67,8 @@
   display: flex;
   justify-content: space-around;
   margin-top: 20px;
+
+  flex-wrap: wrap;
 }
 
 .container {
@@ -75,13 +77,15 @@
   flex-direction: column;
   text-align: center;
   padding: 5px;
+  width: 30%;
+  height: 300px;
+  overflow: hidden;
+  margin-bottom: 20px;
 }
 
 .images {
-  width: 280px;
-  height: 200px;
+  height: 90%;
   object-fit: cover;
-
   align-items: center;
 }
 

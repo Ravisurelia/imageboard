@@ -11,7 +11,7 @@ if (process.env.DATABASE_URL) {
 
 exports.gettingImages = () => {
   //inserting user data first, last, email, password
-  return db.query(`SELECT * FROM images`);
+  return db.query(`SELECT * FROM images ORDER BY created_at DESC`);
 };
 
 exports.uploadImage = (url, username, title, description) => {
