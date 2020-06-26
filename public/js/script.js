@@ -36,11 +36,12 @@
         formData.append("description", this.description);
         formData.append("username", this.username);
         formData.append("file", this.file);
-
+        var self = this;
         axios
           .post("/upload", formData)
           .then(function (resp) {
             console.log("resp from POST/upload: ", resp);
+            self.gettingAllInfo.unshift(resp.data);
           })
           .catch(function (err) {
             console.log("my post upload error: ", err);

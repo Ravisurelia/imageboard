@@ -13,3 +13,11 @@ exports.gettingImages = () => {
   //inserting user data first, last, email, password
   return db.query(`SELECT * FROM images`);
 };
+
+exports.uploadImage = (url, username, title, description) => {
+  //inserting data
+  return db.query(
+    `INSERT INTO images (url, username, title, description) VALUES ($1, $2, $3, $4) RETURNING *`,
+    [url, username, title, description]
+  );
+};

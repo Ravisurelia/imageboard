@@ -1,7 +1,9 @@
 const express = require("express");
 const app = express();
+const s3 = require("./s3");
+const { s3Url } = require("./config.json");
 
-const { gettingImages } = require("./db");
+const { gettingImages, uploadImage } = require("./db");
 
 //-----------------------------------------------------
 //-------FILE UPLOAD BOILERPLATE-----------------------
@@ -33,14 +35,26 @@ const uploader = multer({
 
 app.use(express.static(__dirname + "/public"));
 
-app.post("/upload", uploader.single("file"), (req, res) => {
+app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
   console.log("file: ", req.file); //file we just uploaded
   console.log("input: ", req.body); //rest of the input field username, title, description
+  const { filename } = req.file;
+  const imageUrl = `${s3Url}${filename}`;
+
   if (req.file) {
     //you will do db insert here all the info
-    res.json({
-      success: true,
-    });
+    uploadImage(
+      imageUrl,
+      req.body.username,
+      req.body.title,
+      req.body.description
+    )
+      .then(({ rows }) => {
+        res.json(rows[0]);
+      })
+      .catch((err) => {
+        console.log("This is my uploadImage err: ", err);
+      });
   } else {
     res.json({
       success: false,
