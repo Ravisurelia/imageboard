@@ -6,10 +6,14 @@ app.use(express.static(__dirname + "/public"));
 const { gettingImages } = require("./db");
 
 app.get("/gettingImages", (req, res) => {
-  gettingImages().then((results) => {
-    console.log("this is my getting results", results);
-    res.json(results.rows); //this is how you send the respond back to vue
-  });
+  gettingImages()
+    .then((results) => {
+      console.log("this is my getting results", results);
+      res.json(results.rows); //this is how you send the respond back to vue
+    })
+    .catch((err) => {
+      console.log("this is my catch err: ", err);
+    });
 
   //res.json(results.rows); //this is how you send the respond back to vue
 });
