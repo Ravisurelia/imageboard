@@ -1,4 +1,81 @@
 (function () {
+  ///////this is a child component to vue instance
+  Vue.component("first-component", {
+    //this is what connect our html to our vue component
+    //this must be equal to the id of our script tag in html
+    template: "#template", //here shows where the code is coming from thats why we are passing the id from html
+    props: ["id"],
+    data: function () {
+      return {
+        url: "",
+        title: "",
+        description: "",
+        username: "",
+        comments: [],
+      };
+    },
+
+    mounted: function () {
+      const self = this;
+      console.log("this is my props: ", this.id);
+      axios
+        .get(`/images/${this.id}`)
+        .then(function (response) {
+          console.log("This is my response in get child mount: ", response);
+          self.url = response.data.url;
+          self.title = response.data.title;
+          self.description = response.data.description;
+          self.username = response.data.username;
+          self.created_at = response.data.created_at;
+        })
+        .catch(function (err) {
+          console.log("error");
+        });
+
+      //getting comment thing done here
+      axios
+        .get(`/comments/${this.id}`)
+        .then(function (response) {
+          console.log("comment get axios req: ", response);
+          self.comments = response.data;
+        })
+        .catch(function (err) {
+          console.log("error in comment axios");
+        });
+    },
+
+    methods: {
+      changeName: function () {
+        this.name = "Nishkam";
+      },
+
+      closeMe: function () {
+        console.log("emitting from the component.");
+        this.$emit("close");
+      },
+
+      postComments: function (e) {
+        e.preventDefault();
+        console.log("my function with this in child postcomment:", this);
+
+        axios
+          .post("/comments", {
+            imageId: this.id,
+            username: this.username,
+            comment: this.comment,
+          })
+          .then(function (resp) {
+            console.log("resp from POST/upload: ", resp);
+            self.comments.unshift(resp.data);
+          })
+          .catch(function (err) {
+            console.log("my post upload error in child : ", err);
+          });
+      },
+    },
+  });
+
+  /*   vue  is the parent here---------------------------------------*/
   new Vue({
     el: "#main",
     data: {
@@ -13,6 +90,8 @@
       description: "",
       username: "",
       file: null,
+      id: null,
+      //here we are checking the if statement which we used in first component in html
     },
 
     mounted: function () {
@@ -54,6 +133,16 @@
         //we are targeting the file and .files means the files and [0] means the selected files
         this.file = e.target.files[0];
         console.log("this is after adding the file: ", this);
+      },
+
+      close: function () {
+        console.log("This is closing things from parent side ");
+        //here we want to update the data to close the modal or make image id to null so modal closes at the end
+      },
+
+      modalOpen: function (id) {
+        console.log("getting my this.id: ", this.id);
+        this.id = id;
       },
     },
   });

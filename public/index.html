@@ -19,17 +19,42 @@
                 
                 <button class="submit"  @click="handleClick" >Upload</button>
             </form>
+
+            <first-component v-if="id" :id="id" @close="closeMe">
+
+            </first-component>
         </div>
         
         <div class="cards">
-            <div class="container" v-for="info in gettingAllInfo">
+            <div class="container" v-for="info in gettingAllInfo"  @click="modalOpen(info.id)">
                 <img :src="info.url" class="images">
                 <p class="title">{{info.title}}  </p>
-                <!-- <p class="card">{{info.username}}</p> -->
-            <!--  <p class="card">{{info.description}} </p> -->
+              
         </div>
 
     </div>
+    <script id="template" type="text/x-template">
+        <div class="component">
+            <h5 @click="changeName">X</h5>
+            <h2>{{title}}</h2>
+            <img :src="url" class="popupImg">
+            <h4>{{description}}</h4>
+            <h4>{{created_at}} by {{username}}</h4>
+
+            <div class="commentbox">
+                <form>
+                    <input v-model="username" type="text" name="username" placeholder="username">
+                    <input v-model="comment" type="text" name="comment" placeholder="comment">
+                    <button @click.prevent="postComments">submit</button>
+                </form>
+            </div>
+
+            
+            <h5 @click="closeMe">close</h5>
+        </div>
+
+    </script>
+
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>
     <script src="/js/script.js"></script>

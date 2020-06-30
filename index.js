@@ -3,7 +3,13 @@ const app = express();
 const s3 = require("./s3");
 const { s3Url } = require("./config.json");
 
-const { gettingImages, uploadImage } = require("./db");
+const {
+  gettingImages,
+  uploadImage,
+  gettingModal,
+  addingComments,
+  gettingComments,
+} = require("./db");
 
 //-----------------------------------------------------
 //-------FILE UPLOAD BOILERPLATE-----------------------
@@ -75,6 +81,39 @@ app.get("/gettingImages", (req, res) => {
     });
 
   //res.json(results.rows); //this is how you send the respond back to vue
+});
+
+app.get("/images/:id", (req, res) => {
+  gettingModal(req.params.id)
+    .then((results) => {
+      console.log("my req.params.id: ", req.params.id);
+
+      res.json(results.rows[0]);
+    })
+    .catch((err) => {
+      console.log("this is my catch err in get image id: ", err);
+    });
+});
+
+app.get("/comments/:id", (req, res) => {
+  gettingComments(req.params.id)
+    .then((results) => {
+      console.log("my req.params.id: ", req.params.id);
+      res.json(results.rows);
+    })
+    .catch((err) => {
+      console.log("this is my catch err in get comment id: ", err);
+    });
+});
+
+app.post("/comments", (req, res) => {
+  addingComments(imageId, username, comment)
+    .then(({ rows }) => {
+      res.json(rows[0]);
+    })
+    .catch((err) => {
+      console.log("This is my adding comments err: ", err);
+    });
 });
 
 app.listen(8080, () => {
