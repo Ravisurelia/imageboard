@@ -12,6 +12,9 @@
         description: "",
         username: "",
         comments: [],
+        user_name: "",
+        user_comment: "",
+        created_at: "",
       };
     },
 
@@ -27,6 +30,7 @@
           self.description = response.data.description;
           self.username = response.data.username;
           self.created_at = response.data.created_at;
+          console.log("here it issssssss", self);
         })
         .catch(function (err) {
           console.log("error");
@@ -45,10 +49,6 @@
     },
 
     methods: {
-      changeName: function () {
-        this.name = "Nishkam";
-      },
-
       closeMe: function () {
         console.log("emitting from the component.");
         this.$emit("close");
@@ -57,16 +57,19 @@
       postComments: function (e) {
         e.preventDefault();
         console.log("my function with this in child postcomment:", this);
+        const self = this;
 
         axios
           .post("/comments", {
-            imageId: this.id,
-            username: this.username,
-            comment: this.comment,
+            imageId: self.id,
+            username: self.user_name,
+            comment: self.user_comment,
           })
           .then(function (resp) {
             console.log("resp from POST/upload: ", resp);
             self.comments.unshift(resp.data);
+            self.user_comment = "";
+            self.user_name = "";
           })
           .catch(function (err) {
             console.log("my post upload error in child : ", err);
@@ -143,6 +146,10 @@
       modalOpen: function (id) {
         console.log("getting my this.id: ", this.id);
         this.id = id;
+      }, //part3
+
+      closeAll: function () {
+        this.id = null;
       },
     },
   });

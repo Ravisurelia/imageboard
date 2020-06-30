@@ -11,6 +11,8 @@ const {
   gettingComments,
 } = require("./db");
 
+app.use(express.json());
+
 //-----------------------------------------------------
 //-------FILE UPLOAD BOILERPLATE-----------------------
 //-----------------------------------------------------
@@ -83,6 +85,7 @@ app.get("/gettingImages", (req, res) => {
   //res.json(results.rows); //this is how you send the respond back to vue
 });
 
+//part3---------------
 app.get("/images/:id", (req, res) => {
   gettingModal(req.params.id)
     .then((results) => {
@@ -95,6 +98,7 @@ app.get("/images/:id", (req, res) => {
     });
 });
 
+//part3---------------
 app.get("/comments/:id", (req, res) => {
   gettingComments(req.params.id)
     .then((results) => {
@@ -106,9 +110,14 @@ app.get("/comments/:id", (req, res) => {
     });
 });
 
+//part3---------------
 app.post("/comments", (req, res) => {
-  addingComments(imageId, username, comment)
+  console.log("this is my re.body in post index", req.body);
+
+  addingComments(req.body.imageId, req.body.username, req.body.comment)
     .then(({ rows }) => {
+      console.log(req.params.imageId);
+
       res.json(rows[0]);
     })
     .catch((err) => {

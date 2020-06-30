@@ -20,22 +20,22 @@
                 <button class="submit"  @click="handleClick" >Upload</button>
             </form>
 
-            <first-component v-if="id" :id="id" @close="closeMe">
+            <div class="cards">
+                <div class="container" v-for="info in gettingAllInfo"  @click="modalOpen(info.id)">
+                    <img :src="info.url" class="images">
+                    <p class="title">{{info.title}}  </p>
+                </div>
+            </div>
 
-            </first-component>
         </div>
         
-        <div class="cards">
-            <div class="container" v-for="info in gettingAllInfo"  @click="modalOpen(info.id)">
-                <img :src="info.url" class="images">
-                <p class="title">{{info.title}}  </p>
-              
-        </div>
+        <first-component v-if="id" :id="id" @close="closeAll"></first-component>
 
     </div>
+
     <script id="template" type="text/x-template">
-        <div class="component">
-            <h5 @click="changeName">X</h5>
+        <div class="component" @close="closeMe">
+           
             <h2>{{title}}</h2>
             <img :src="url" class="popupImg">
             <h4>{{description}}</h4>
@@ -43,10 +43,14 @@
 
             <div class="commentbox">
                 <form>
-                    <input v-model="username" type="text" name="username" placeholder="username">
-                    <input v-model="comment" type="text" name="comment" placeholder="comment">
+                    <input v-model="user_name" type="text" name="username" placeholder="username">
+                    <input v-model="user_comment" type="text" name="comment" placeholder="comment">
                     <button @click.prevent="postComments">submit</button>
                 </form>
+            </div>
+            <div v-for="comment in comments">
+                <p>{{comment.username}}: {{comment.comment}}</p>
+                
             </div>
 
             
