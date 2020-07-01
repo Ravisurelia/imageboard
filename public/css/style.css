@@ -230,6 +230,31 @@ h1 {
   filter: drop-shadow(3px 3px 3px #222);
 }
 
+.profile {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.click {
+  font-size: 30px;
+  text-decoration: none;
+  font-weight: lighter;
+  color: red;
+  letter-spacing: 2px;
+}
+.click:hover {
+  transform: scale(1.1);
+  color: royalblue;
+}
+.pexel {
+  font-size: 30px;
+  text-decoration: none;
+  font-weight: lighter;
+  color: black;
+  letter-spacing: 2px;
+}
+
 .img_data {
   display: flex;
   flex-direction: column;
