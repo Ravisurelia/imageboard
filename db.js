@@ -11,7 +11,7 @@ if (process.env.DATABASE_URL) {
 
 exports.gettingImages = () => {
   //inserting user data first, last, email, password
-  return db.query(`SELECT * FROM images ORDER BY created_at DESC`);
+  return db.query(`SELECT * FROM images ORDER BY created_at DESC LIMIT 8`);
 };
 
 exports.uploadImage = (url, username, title, description) => {
@@ -34,5 +34,23 @@ exports.addingComments = (imageId, username, comment) => {
 };
 
 exports.gettingComments = (id) => {
-  return db.query(`SELECT * FROM comments WHERE image_id = $1`, [id]);
+  return db.query(
+    `SELECT * FROM comments WHERE image_id = $1 ORDER BY created_at DESC`,
+    [id]
+  );
+};
+
+exports.getMoreImages = (lastId) => {
+  return db
+    .query(
+      `SELECT *, (SELECT MIN(id) 
+    FROM images) 
+    AS last_id
+    FROM images
+    WHERE id < $1
+    ORDER BY id DESC
+    LIMIT 8`,
+      [lastId]
+    )
+    .then(({ rows }) => rows);
 };

@@ -94,6 +94,8 @@
       username: "",
       file: null,
       id: null,
+      lastId: 0,
+      more: true,
       //here we are checking the if statement which we used in first component in html
     },
 
@@ -150,6 +152,30 @@
 
       closeAll: function () {
         this.id = null;
+      },
+
+      getMoreImages: function () {
+        var self = this;
+        var lastId;
+        console.log("Images: ", self.gettingAllInfo);
+        lastId = self.gettingAllInfo[self.gettingAllInfo.length - 1].id;
+        axios
+          .get("/images/more/" + lastId)
+          .then(function (response) {
+            self.gettingAllInfo = self.gettingAllInfo.concat(response.data);
+
+            if (
+              response.data[response.data.length - 1].id ==
+              response.data[response.data.length - 1].last_id
+            ) {
+              self.more = false;
+            }
+            console.log("this is my response.data: ", response.data);
+            console.log("this is my self: ", self);
+          })
+          .catch((err) => {
+            console.log("err in gettingMoreImages: ", err);
+          });
       },
     },
   });

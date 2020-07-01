@@ -9,6 +9,7 @@ const {
   gettingModal,
   addingComments,
   gettingComments,
+  getMoreImages,
 } = require("./db");
 
 app.use(express.json());
@@ -123,6 +124,15 @@ app.post("/comments", (req, res) => {
     .catch((err) => {
       console.log("This is my adding comments err: ", err);
     });
+});
+
+app.get("/images/more/:id", (req, res) => {
+  getMoreImages(req.params.id).then((rows) => {
+    console.log("req.params.id :", req.params.id);
+    console.log("this is my rows in getMoreImages: ", rows);
+
+    res.json(rows);
+  });
 });
 
 app.listen(8080, () => {

@@ -8,7 +8,7 @@
 </head>
 <body>
     <nav class="navigation">
-        <img class="logo" src="/css/logo.png" alt="logo"/>
+        <img class="logo" id="red" src="/css/logo.png" alt="logo"/>
         <h1>Pixelr</h1>
     </nav>
     <div id="main">
@@ -29,6 +29,8 @@
                 </div>
             </div>
 
+            <button @click="getMoreImages" v-if="more" class="morebtn">More</button>
+
         </div>
         
         <first-component v-if="id" :id="id" @close="closeAll"></first-component>
@@ -36,30 +38,40 @@
     </div>
 
     <script id="template" type="text/x-template">
-        <div class="component" @close="closeMe">
-           <div class="img_data">
-            <h2>{{title}}</h2>
-            <img :src="url" class="popupImg">
-            <h4>Description: {{description}} | | Uploaded on: {{created_at}} by {{username}}</h4>
-           </div>
-            
-
-            <div class="commentbox">
-                <form>
-                    <input v-model="user_name" type="text" name="username" placeholder="username" class="block">
-                    <input v-model="user_comment" type="text" name="comment" placeholder="comment" class="block">
-                    <button @click.prevent="postComments" class="sub_commt">submit</button>
-                </form>
-
-                <div class="cmts" v-for="comment in comments" >
-                    <h5>{{comment.username}}: {{comment.comment}}</h5>
+        
+            <div class="component" @close="closeMe">
+                <div class="img_data">
+                    <h2>{{title}}</h2>
+                    <img :src="url" class="popupImg">
+                    <h4>Description: {{description}} | | Uploaded on: {{created_at}} by {{username}}</h4>
                 </div>
+             
+ 
+                <div class="commentbox">
+                    <form>
+                        <input v-model="user_name" type="text" name="username" placeholder="username" class="block">
+                        <input v-model="user_comment" type="text" name="comment" placeholder="comment" class="block">
+                        <button @click.prevent="postComments" class="sub_commt">submit</button>
+                    </form>
+ 
+                    <div class="cmts">
+                        <div  v-for="comment in comments" >
+                            <div class="com_con">
+                                <h5>{{comment.comment}} :by {{comment.username}}</h5>
+                            
+                            </div>
+                        </div>
 
+                    </div>
+                    
+ 
+                </div>
+ 
+                <h5 @click="closeMe" class="myX">X</h5>
+ 
             </div>
-
-            <h5 @click="closeMe" class="myX">X</h5>
-
         </div>
+        
 
     </script>
 
