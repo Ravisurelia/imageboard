@@ -127,12 +127,15 @@ app.post("/comments", (req, res) => {
 });
 
 app.get("/images/more/:id", (req, res) => {
-  getMoreImages(req.params.id).then((rows) => {
-    console.log("req.params.id :", req.params.id);
-    console.log("this is my rows in getMoreImages: ", rows);
-
-    res.json(rows);
-  });
+  getMoreImages(req.params.id)
+    .then((rows) => {
+      console.log("req.params.id :", req.params.id);
+      console.log("this is my rows in getMoreImages: ", rows);
+      res.json(rows);
+    })
+    .catch((err) => {
+      console.log("this is my err on server get more images:", err);
+    });
 });
 
 app.listen(8080, () => {

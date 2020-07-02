@@ -12,7 +12,7 @@
         <h1>Pixelr</h1>
     </nav>
     <div class="profile">
-        <a class="click" href="https://www.pexels.com/@ravi-surelia-1953012"> Click-  </a> <h6 class="pexel">  -here to my Pexel profile</h6>
+        <a class="click" href="https://www.pexels.com/"> Click-  </a> <h6 class="pexel">  -If you want to see some more amazing pictures</h6>
     </div>
     <div id="main">
         <div class="inputs">
@@ -41,7 +41,7 @@
     </div>
 
     <script id="template" type="text/x-template">
-        
+        <div class="overlay" @click.self="closeMe">
             <div class="component" @close="closeMe">
                 <div class="img_data">
                     <h2>{{title}}</h2>
@@ -60,21 +60,19 @@
                     <div class="cmts">
                         <div  v-for="comment in comments" >
                             <div class="com_con">
-                                <h5>{{comment.comment}} :by {{comment.username}}</h5>
+                                <h5>{{comment.comment}} ||  by {{comment.username}} || {{comment.created_at}}</h5>
                             
                             </div>
                         </div>
 
                     </div>
-                    
  
                 </div>
- 
+                
                 <h5 @click="closeMe" class="myX">X</h5>
- 
+                
             </div>
         </div>
-        
 
     </script>
 
